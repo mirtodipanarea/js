@@ -1,5 +1,5 @@
 ```
-#### JavaScript Collection for Fun
+JavaScript Collection for Fun
 ```
 
 | No | javaScript |
