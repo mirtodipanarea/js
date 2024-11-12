@@ -1,6 +1,4 @@
-```
-JavaScript Collection for Fun
-```
+![header](https://capsule-render.vercel.app/api?type=wave&color=auto&height=150&section=header&text=JavaScript%Collection%20for%20Fun&fontSize=22)
 
 | No | javaScript |
 | ------------ | ------------- |
