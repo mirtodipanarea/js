@@ -2,7 +2,7 @@
 | ------------ | ------------- |
 | 1 | <a href="https://baesub.github.io/JS/3d.html"> 3D </a>  |
 | 2 | <a href="https://baesub.github.io/JS/choose-num.html"> 숫자 맞추기 게임 </a>  |
-| 3 | <a href="https://baesub.github.io/JS/cube.html"> 회전하는 큐브 </a>  |
+| 3 | <a href="https://baesub.github.io/JS/cube.html"> 마우스 따라 회전하는 큐브 </a>  |
 | 4 | <a href="https://baesub.github.io/JS/follow-rainbow.html"> 마우스를 따라가는 무지개 </a>  |
 | 5 | <a href="https://baesub.github.io/JS/follow-star.html"> 마우스를 따라가는 별 </a>  |
 | 6 | <a href="https://baesub.github.io/JS/follow-water.html"> 마우스를 따라 흐르는 액체 </a>  |
