@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=wave&color=auto&height=150&section=header&text=JavaScript%Collection%20for%20Fun&fontSize=22)
+![header](https://capsule-render.vercel.app/api?type=wave&color=auto&height=150&section=header&text=JavaScript%20Collection%20for%20Fun&fontSize=25)
 
 | No | javaScript |
 | ------------ | ------------- |
