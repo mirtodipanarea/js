@@ -1,4 +1,6 @@
-## 심심할 때 만드는 자바스크립트 모음
+```
+#### JavaScript Collection for Fun
+```
 
 | No | javaScript |
 | ------------ | ------------- |
