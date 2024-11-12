@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>별이 쏟아지는 효과</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #1d1d1d;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .star {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background-color: yellow;
+      clip-path: polygon(
+        50% 0%, 
+        61% 35%, 
+        98% 35%, 
+        68% 57%, 
+        79% 91%, 
+        50% 70%, 
+        21% 91%, 
+        32% 57%, 
+        2% 35%, 
+        39% 35%
+      );
+      opacity: 0;
+      animation: fall 1s forwards;
+    }
+    @keyframes fall {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(500px) scale(1.2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    document.body.addEventListener('click', (event) => {
+      createStars(event.clientX, event.clientY);
+    });
+
+    function createStars(x, y) {
+      const starCount = 20; // 생성할 별의 개수
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.left = `${x - 7.5}px`; // 클릭한 위치에 별이 나타나게 조정
+        star.style.top = `${y - 7.5}px`;
+
+        document.body.appendChild(star);
+
+        // 별의 애니메이션을 다르게 하기 위해 랜덤한 속도와 각도 부여
+        const randomDelay = Math.random() * 0.5;
+        const randomDuration = Math.random() * 1 + 1; // 애니메이션 시간
+        const randomScale = Math.random() * 0.5 + 0.5; // 별 크기 조정
+
+        star.style.animationDelay = `${randomDelay}s`;
+        star.style.animationDuration = `${randomDuration}s`;
+        star.style.transform = `scale(${randomScale}) rotate(${Math.random() * 360}deg)`;
+
+        // 애니메이션 후 별 제거
+        setTimeout(() => {
+          star.remove();
+        }, randomDuration * 1000);
+      }
+    }
+  </script>
+</body>
+</html>

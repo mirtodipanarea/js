@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마우스를 따라 다니는 빛</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #1a1a1a;
+      height: 100vh;
+    }
+    .light {
+      position: absolute;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 60%);
+      pointer-events: none;
+      transition: transform 0.1s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="light" id="light"></div>
+
+  <script>
+    const light = document.getElementById("light");
+
+    // 마우스 움직임을 추적하여 빛을 그 위치로 이동
+    document.addEventListener("mousemove", (e) => {
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+
+      light.style.left = `${mouseX - light.offsetWidth / 2}px`;
+      light.style.top = `${mouseY - light.offsetHeight / 2}px`;
+      light.style.transform = "scale(1.2)";
+    });
+
+    // 빛의 크기가 자연스럽게 줄어드는 효과
+    document.addEventListener("mouseout", () => {
+      light.style.transform = "scale(1)";
+    });
+  </script>
+</body>
+</html>

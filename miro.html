@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>미로 탈출 게임</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 30px;
+    }
+
+    #maze {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(10, 30px);
+      grid-template-rows: repeat(10, 30px);
+      gap: 2px;
+      justify-content: center;
+    }
+
+    .cell {
+      width: 30px;
+      height: 30px;
+      background-color: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #aaa;
+    }
+
+    .wall {
+      background-color: #000;
+    }
+
+    .player {
+      background-color: #4CAF50;
+    }
+
+    .goal {
+      background-color: #FF6347;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>미로 탈출 게임</h1>
+  <div id="maze"></div>
+  <div id="message"></div>
+
+  <script>
+    const maze = [
+      ['start', 'empty', 'wall', 'empty', 'empty', 'empty', 'wall', 'empty', 'empty', 'goal'],
+      ['empty', 'wall', 'empty', 'wall', 'empty', 'wall', 'empty', 'empty', 'wall', 'empty'],
+      ['empty', 'wall', 'empty', 'wall', 'empty', 'wall', 'empty', 'wall', 'empty', 'empty'],
+      ['empty', 'empty', 'empty', 'empty', 'empty', 'wall', 'empty', 'empty', 'empty', 'empty'],
+      ['wall', 'wall', 'wall', 'wall', 'empty', 'wall', 'wall', 'wall', 'wall', 'empty'],
+      ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'wall', 'empty', 'empty'],
+      ['empty', 'wall', 'wall', 'wall', 'wall', 'empty', 'wall', 'empty', 'wall', 'empty'],
+      ['empty', 'wall', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'wall', 'empty'],
+      ['empty', 'wall', 'wall', 'wall', 'wall', 'empty', 'wall', 'wall', 'wall', 'empty'],
+      ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty']
+    ];
+
+    const mazeSize = 10;
+    let playerPosition = { x: 0, y: 0 };
+    let goalPosition = { x: 9, y: 0 };
+
+    function createMaze() {
+      const mazeElement = document.getElementById('maze');
+      mazeElement.innerHTML = '';
+      for (let y = 0; y < mazeSize; y++) {
+        for (let x = 0; x < mazeSize; x++) {
+          const cell = document.createElement('div');
+          cell.classList.add('cell');
+          if (maze[y][x] === 'wall') {
+            cell.classList.add('wall');
+          } else if (maze[y][x] === 'start') {
+            cell.classList.add('player');
+          } else if (maze[y][x] === 'goal') {
+            cell.classList.add('goal');
+          }
+          mazeElement.appendChild(cell);
+        }
+      }
+      updatePlayerPosition();
+    }
+
+    function updatePlayerPosition() {
+      const mazeElement = document.getElementById('maze');
+      const cells = mazeElement.getElementsByClassName('cell');
+      const playerIndex = playerPosition.y * mazeSize + playerPosition.x;
+      const playerCell = cells[playerIndex];
+      playerCell.classList.add('player');
+    }
+
+    function movePlayer(direction) {
+      const { x, y } = playerPosition;
+      let newX = x;
+      let newY = y;
+
+      if (direction === 'up') newY--;
+      if (direction === 'down') newY++;
+      if (direction === 'left') newX--;
+      if (direction === 'right') newX++;
+
+      if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && maze[newY][newX] !== 'wall') {
+        playerPosition = { x: newX, y: newY };
+        if (playerPosition.x === goalPosition.x && playerPosition.y === goalPosition.y) {
+          document.getElementById('message').textContent = '축하합니다! 미로를 탈출했습니다!';
+        }
+      }
+
+      createMaze();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowUp') movePlayer('up');
+      if (e.key === 'ArrowDown') movePlayer('down');
+      if (e.key === 'ArrowLeft') movePlayer('left');
+      if (e.key === 'ArrowRight') movePlayer('right');
+    });
+
+    createMaze();
+  </script>
+</body>
+</html>

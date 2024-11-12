@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D 회전하는 큐브</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+      border: 1px solid #fff;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let cubeRotationX = 0;
+    let cubeRotationY = 0;
+
+    // 3D 큐브의 꼭짓점 좌표 정의
+    const vertices = [
+      [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
+      [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]
+    ];
+
+    // 큐브의 변(선) 정의 (두 꼭짓점 간 연결)
+    const edges = [
+      [0, 1], [1, 2], [2, 3], [3, 0], // 앞면
+      [4, 5], [5, 6], [6, 7], [7, 4], // 뒷면
+      [0, 4], [1, 5], [2, 6], [3, 7]  // 좌우 연결
+    ];
+
+    // 회전 행렬 적용
+    function rotate(vertices, angleX, angleY) {
+      const cosX = Math.cos(angleX);
+      const sinX = Math.sin(angleX);
+      const cosY = Math.cos(angleY);
+      const sinY = Math.sin(angleY);
+
+      return vertices.map(([x, y, z]) => {
+        // X축 회전
+        let tempY = y * cosX - z * sinX;
+        let tempZ = y * sinX + z * cosX;
+        y = tempY;
+        z = tempZ;
+
+        // Y축 회전
+        let tempX = x * cosY + z * sinY;
+        z = -x * sinY + z * cosY;
+        x = tempX;
+
+        return [x, y, z];
+      });
+    }
+
+    // 3D 좌표를 2D로 투영
+    function project(x, y, z) {
+      const scale = 500;
+      const distance = 4;
+      const factor = scale / (distance + z);
+      const x2d = x * factor + canvas.width / 2;
+      const y2d = -y * factor + canvas.height / 2;
+      return [x2d, y2d];
+    }
+
+    // 큐브를 그리기
+    function drawCube() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const rotatedVertices = rotate(vertices, cubeRotationX, cubeRotationY);
+
+      // 큐브의 변을 그리기
+      ctx.beginPath();
+      edges.forEach(([start, end]) => {
+        const [x1, y1] = project(...rotatedVertices[start]);
+        const [x2, y2] = project(...rotatedVertices[end]);
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+      });
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.closePath();
+    }
+
+    // 애니메이션 함수
+    function animate() {
+      cubeRotationX += 0.01;
+      cubeRotationY += 0.01;
+      drawCube();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

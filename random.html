@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>실시간 랜덤 도형 애니메이션</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #111;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // 캔버스 크기 설정
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // 랜덤 색상 생성
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    // 랜덤 도형 객체 생성
+    function createRandomShape() {
+      const shapes = ['circle', 'square', 'triangle'];
+      const shape = shapes[Math.floor(Math.random() * shapes.length)];
+      const size = Math.random() * 50 + 30;
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      const color = getRandomColor();
+      const speedX = Math.random() * 2 + 1;
+      const speedY = Math.random() * 2 + 1;
+
+      return { shape, size, x, y, color, speedX, speedY };
+    }
+
+    // 도형 그리기
+    function drawShape(shapeObj) {
+      ctx.fillStyle = shapeObj.color;
+      ctx.strokeStyle = shapeObj.color;
+
+      if (shapeObj.shape === 'circle') {
+        ctx.beginPath();
+        ctx.arc(shapeObj.x, shapeObj.y, shapeObj.size, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (shapeObj.shape === 'square') {
+        ctx.fillRect(shapeObj.x - shapeObj.size / 2, shapeObj.y - shapeObj.size / 2, shapeObj.size, shapeObj.size);
+      } else if (shapeObj.shape === 'triangle') {
+        ctx.beginPath();
+        ctx.moveTo(shapeObj.x, shapeObj.y - shapeObj.size / 2);
+        ctx.lineTo(shapeObj.x - shapeObj.size / 2, shapeObj.y + shapeObj.size / 2);
+        ctx.lineTo(shapeObj.x + shapeObj.size / 2, shapeObj.y + shapeObj.size / 2);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
+
+    // 도형 애니메이션
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);  // 화면 지우기
+
+      shapes.forEach(shape => {
+        shape.x += shape.speedX;
+        shape.y += shape.speedY;
+
+        // 도형이 벽에 닿으면 반사되도록 설정
+        if (shape.x + shape.size > canvas.width || shape.x - shape.size < 0) {
+          shape.speedX = -shape.speedX;
+        }
+        if (shape.y + shape.size > canvas.height || shape.y - shape.size < 0) {
+          shape.speedY = -shape.speedY;
+        }
+
+        drawShape(shape);  // 도형 그리기
+      });
+
+      requestAnimationFrame(animate);  // 애니메이션 계속 반복
+    }
+
+    let shapes = [];  // 생성된 도형들을 저장할 배열
+
+    // 마우스를 클릭할 때마다 랜덤 도형 추가
+    window.addEventListener('click', () => {
+      const newShape = createRandomShape();
+      shapes.push(newShape);
+    });
+
+    animate();  // 애니메이션 시작
+  </script>
+</body>
+</html>

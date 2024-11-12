@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마우스를 따라 흐르는 액체</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #1d1d1d;
+      overflow: hidden;
+    }
+
+    .liquid {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: rgba(0, 204, 255, 0.7);
+      pointer-events: none;
+      transform: scale(0);
+      animation: liquid-animation 1s ease-out forwards;
+    }
+
+    @keyframes liquid-animation {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(2);
+        opacity: 0.7;
+      }
+      100% {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // 마우스를 따라 액체처럼 흐르는 원을 생성하는 이벤트
+    window.addEventListener('mousemove', (event) => {
+      const liquid = document.createElement('div');
+      liquid.classList.add('liquid');
+      document.body.appendChild(liquid);
+
+      // 액체의 위치 설정
+      const x = event.clientX;
+      const y = event.clientY;
+      liquid.style.left = `${x - 30}px`;  // 원의 중심 맞추기 위해 30px 빼줌
+      liquid.style.top = `${y - 30}px`;   // 원의 중심 맞추기 위해 30px 빼줌
+
+      // 액체의 크기 랜덤 설정 (원 크기를 다양하게 변화)
+      const size = Math.random() * 40 + 40; // 크기 40px ~ 80px
+      liquid.style.width = `${size}px`;
+      liquid.style.height = `${size}px`;
+
+      // 액체 사라짐 시간 설정 (1초 후 제거)
+      setTimeout(() => {
+        liquid.remove();
+      }, 1000); // 액체가 사라지는 시간을 1초로 설정
+    });
+  </script>
+</body>
+</html>

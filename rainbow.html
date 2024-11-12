@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>무지개 잔상 효과</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #1d1d1d;
+      height: 100vh;
+    }
+    .trail {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: red;
+      pointer-events: none;
+      opacity: 1;
+      transition: transform 0.2s, opacity 1s;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const colors = ["#FF5733", "#FFBD33", "#DBFF33", "#75FF33", "#33FF57", "#33FFBD", "#33DBFF", "#3375FF", "#5733FF", "#BD33FF"];
+    let colorIndex = 0;
+
+    document.addEventListener('mousemove', (event) => {
+      createTrail(event.clientX, event.clientY);
+    });
+
+    function createTrail(x, y) {
+      const trail = document.createElement('div');
+      trail.classList.add('trail');
+      trail.style.left = `${x}px`;
+      trail.style.top = `${y}px`;
+      trail.style.backgroundColor = colors[colorIndex % colors.length];
+      colorIndex++; // 색상 인덱스 증가
+
+      document.body.appendChild(trail);
+
+      // 트레일이 사라지는 효과
+      setTimeout(() => {
+        trail.style.opacity = '0';
+      }, 50);
+
+      // 일정 시간이 지나면 트레일 요소를 제거
+      setTimeout(() => {
+        trail.remove();
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

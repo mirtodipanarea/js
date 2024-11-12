@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>타워 디펜스 게임</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #game-container {
+      position: relative;
+      width: 800px;
+      height: 600px;
+      background-color: #87CEEB;
+      border: 2px solid #000;
+      overflow: hidden;
+    }
+
+    .tower {
+      width: 50px;
+      height: 50px;
+      background-color: #228B22;
+      position: absolute;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .enemy {
+      width: 30px;
+      height: 30px;
+      background-color: red;
+      border-radius: 50%;
+      position: absolute;
+      animation: moveEnemy 5s linear infinite;
+    }
+
+    @keyframes moveEnemy {
+      0% {
+        left: 0;
+        top: 50%;
+      }
+      100% {
+        left: 100%;
+        top: 50%;
+      }
+    }
+
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 20px;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <div id="score">점수: 0</div>
+  </div>
+
+  <script>
+    let score = 0;
+    let towers = [];
+    let gameContainer = document.getElementById('game-container');
+    let scoreElement = document.getElementById('score');
+
+    // 타워 배치
+    gameContainer.addEventListener('click', (event) => {
+      const tower = document.createElement('div');
+      tower.classList.add('tower');
+      tower.style.left = `${event.clientX - gameContainer.offsetLeft - 25}px`;
+      tower.style.top = `${event.clientY - gameContainer.offsetTop - 25}px`;
+      gameContainer.appendChild(tower);
+      towers.push(tower);
+    });
+
+    // 적을 생성하는 함수
+    function createEnemy() {
+      const enemy = document.createElement('div');
+      enemy.classList.add('enemy');
+      enemy.style.top = `${Math.random() * gameContainer.clientHeight}px`;
+      gameContainer.appendChild(enemy);
+
+      // 적이 타워와 충돌하면 점수 증가
+      setInterval(() => {
+        towers.forEach(tower => {
+          const enemyRect = enemy.getBoundingClientRect();
+          const towerRect = tower.getBoundingClientRect();
+          
+          if (
+            enemyRect.left < towerRect.right &&
+            enemyRect.right > towerRect.left &&
+            enemyRect.top < towerRect.bottom &&
+            enemyRect.bottom > towerRect.top
+          ) {
+            score += 10;
+            scoreElement.textContent = `점수: ${score}`;
+            enemy.remove();
+          }
+        });
+      }, 100);
+
+      // 적이 화면 끝에 도달하면 삭제
+      setTimeout(() => {
+        enemy.remove();
+      }, 5000);
+    }
+
+    // 일정 시간마다 적 생성
+    setInterval(createEnemy, 2000);
+  </script>
+</body>
+</html>

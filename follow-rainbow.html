@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마우스 트레일 레인보우</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #000;
+    }
+
+    .trail {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: trail-animation 1s forwards;
+    }
+
+    @keyframes trail-animation {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const colors = [
+      '#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#8B00FF', // 레인보우 색상
+    ];
+
+    // 마우스를 따라 트레일을 생성하는 함수
+    window.addEventListener('mousemove', (event) => {
+      const trail = document.createElement('div');
+      trail.classList.add('trail');
+      document.body.appendChild(trail);
+
+      // 트레일의 색상 설정 (레인보우 색상 중 하나)
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      trail.style.backgroundColor = color;
+
+      // 트레일 위치 설정
+      const x = event.clientX;
+      const y = event.clientY;
+      trail.style.left = `${x - 5}px`;  // 중심을 맞추기 위해 5px을 빼줍니다.
+      trail.style.top = `${y - 5}px`;  // 중심을 맞추기 위해 5px을 빼줍니다.
+
+      // 트레일의 사라짐 시간 설정 (1초 후 제거)
+      setTimeout(() => {
+        trail.remove();
+      }, 1000); // 1초 후 트레일 제거
+    });
+  </script>
+</body>
+</html>

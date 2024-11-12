@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D 회전하는 큐브</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #222;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .cube {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      transform-style: preserve-3d;
+      transform: rotateX(-30deg) rotateY(-45deg);
+      transition: transform 0.1s ease-out; /* 부드러운 전환 효과 */
+    }
+
+    .face {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 2px solid #444;
+    }
+
+    .front  { transform: translateZ(100px); background-color: red; }
+    .back   { transform: rotateY(180deg) translateZ(100px); background-color: blue; }
+    .left   { transform: rotateY(-90deg) translateZ(100px); background-color: green; }
+    .right  { transform: rotateY(90deg) translateZ(100px); background-color: yellow; }
+    .top    { transform: rotateX(90deg) translateZ(100px); background-color: purple; }
+    .bottom { transform: rotateX(-90deg) translateZ(100px); background-color: orange; }
+  </style>
+</head>
+<body>
+  <div class="cube">
+    <div class="face front"></div>
+    <div class="face back"></div>
+    <div class="face left"></div>
+    <div class="face right"></div>
+    <div class="face top"></div>
+    <div class="face bottom"></div>
+  </div>
+
+  <script>
+    const cube = document.querySelector('.cube');
+    
+    // 마우스 위치를 기준으로 큐브 회전
+    window.addEventListener('mousemove', (event) => {
+      const cubeRect = cube.getBoundingClientRect();  // 큐브의 위치와 크기
+      const x = event.clientX - cubeRect.left; // 큐브 내 X 위치
+      const y = event.clientY - cubeRect.top;  // 큐브 내 Y 위치
+      
+      // 상대적 위치를 기준으로 회전 각도 조정
+      const rotateX = ((y / cubeRect.height) * 60) - 30; // 3D 회전 X축
+      const rotateY = ((x / cubeRect.width) * 60) - 30; // 3D 회전 Y축
+
+      cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+  </script>
+</body>
+</html>
