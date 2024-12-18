@@ -13,6 +13,6 @@
 | 9 | <a href="https://eekfrl.github.io/Js/mouse-js.html" target="_blank"> 마우스를 따라 다니는 빛 </a>  |
 | 10 | <a href="https://eekfrl.github.io/Js/particle.html" target="_blank"> 파티클 애니메이션 </a>  |
 | 11 | <a href="https://eekfrl.github.io/Js/rainbow.html" target="_blank"> 무지개 잔상 효과 </a>  |
-| 12 | <a href="https://eekfrl.github.io/Js/random.html" target="_blank"> 랜덤 도형 추출 </a>  |
-| 13 | <a href="https://eekfrl.github.io/Js/starry.html" target="_blank"> 클릭하면 별 쏟아짐 </a>  |
+| 12 | <a href="https://eekfrl.github.io/Js/random.html" target="_blank"> 클릭시 랜덤 도형 추출 </a>  |
+| 13 | <a href="https://eekfrl.github.io/Js/starry.html" target="_blank"> 클릭시 별 쏟아짐 </a>  |
 | 14 | <a href="https://eekfrl.github.io/Js/tower.html" target="_blank"> 타워 디펜스 게임 </a>  |
