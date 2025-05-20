@@ -1,6 +1,6 @@
-![header](https://capsule-render.vercel.app/api?type=wave&color=auto&height=150&section=header&text=JavaScript%20Collection%20for%20Fun&fontSize=25)
+![header](https://capsule-render.vercel.app/api?type=wave&color=auto&height=150&section=header&text=javascript%20collection&fontSize=25)
 
-| No | javaScript |
+| n | javascript |
 | ------------ | ------------- |
 | 1 | <a href="https://eekfrl.github.io/Js/3d.html" target="_blank"> 3D </a>  |
 | 2 | <a href="https://eekfrl.github.io/Js/choose-num.html" target="_blank"> 숫자 맞추기 게임 </a>  |
